@@ -19,7 +19,6 @@
 name: Apache Wayang Ruby deploy
 run-name: Deploying latest updates on Apache Wayang Website
 env:
-  BRANCH_PAGE: asf-site
   URL: "https://wayang.apache.org"
   BASE_URL: "/"
   REPO_URL: git@github.com:glauesppen/incubator-wayang-website.git
@@ -133,7 +132,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ref: $BRANCH_PAGE
+          ref: origin/asf-site
 
       - name: GIT Commit Build Artifacts
         run: |
