@@ -112,18 +112,20 @@ jobs:
       #     #git pull origin $BRANCH_PAGE --allow-unrelated-histories
       #     #git checkout $BRANCH_PAGE
 
-      - name: Cloning repository
-        run: |
-          mkdir ../$BRANCH_PAGE
-          cd ../$BRANCH_PAGE
-          git clone --depth 50 --branch $BRANCH_PAGE $REPO_URL
+      # - name: Cloning repository
+      #   run: |
+      #     mkdir ../$BRANCH_PAGE
+      #     cd ../$BRANCH_PAGE
+      #     git clone --depth 50 --branch $BRANCH_PAGE git@github.com:glauesppen/incubator-wayang-website.git
 
-      - name: Delete the old file that it was not gerenated
+      - name: Delete the old file that was not gerenated
         run: |
           rm -rf $(diff --exclude=".git" --exclude="./docs" -q ../tmp/ ./ | awk '/Only in \.\//{print substr($3, 1, length($3)-1) "" $4}')
 
       - name: Syncing files
         run: |
+          mkdir ../$BRANCH_PAGE
+          cd ../$BRANCH_PAGE
           rsync -av ../tmp/* ./
           cp ../tmp/.gitignore ./
           cp ../tmp/.asf.yaml ./
@@ -136,3 +138,16 @@ jobs:
       #     git commit -m "Lastest site built on successful travis build ${{github.run_number}} auto-pushed to github"
       #     git remote set-url origin https://${{secrets.USER}}:${{secrets.TOKEN}}@github.com/$TRAVIS_REPO_SLUG}}
       #     git push origin $BRANCH_PAGE:$BRANCH_PAGE
+
+      - name: GIT Commit Build Artifacts
+            # Only run on main branch push (e.g. after pull request merge).
+            run: |
+              git config --global user.name "Github Actions"
+              git config --global user.email "username@users.noreply.github.com"
+              git checkout $BRANCH_PAGE
+              git add
+              git commit -a -m "Lastest site built on successful github action build ${{github.run_number}} auto-pushed to github"
+      
+      - name: Push the updated branch
+         run: | 
+              git push
