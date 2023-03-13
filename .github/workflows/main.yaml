@@ -130,7 +130,19 @@ jobs:
           cp ../tmp/.gitignore ./
           cp ../tmp/.asf.yaml ./
 
-      # Commenting this step while we understand if still necessary
+      - name: GIT Commit Build Artifacts
+        run: |
+          git config --global user.name "Github Actions"
+          git config --global user.email "username@users.noreply.github.com"
+          git checkout $BRANCH_PAGE
+          git add
+          git commit -a -m "Lastest site built on successful github action build ${{github.run_number}} auto-pushed to github"
+  
+      - name: Push the updated branch
+        run: | 
+          git push
+      
+            # Commenting this step while we understand if still necessary
       # - name: Commiting changes on Travis branch
       #   run: |
       #     git add -A
@@ -138,16 +150,3 @@ jobs:
       #     git commit -m "Lastest site built on successful travis build ${{github.run_number}} auto-pushed to github"
       #     git remote set-url origin https://${{secrets.USER}}:${{secrets.TOKEN}}@github.com/$TRAVIS_REPO_SLUG}}
       #     git push origin $BRANCH_PAGE:$BRANCH_PAGE
-
-      - name: GIT Commit Build Artifacts
-            # Only run on main branch push (e.g. after pull request merge).
-            run: |
-              git config --global user.name "Github Actions"
-              git config --global user.email "username@users.noreply.github.com"
-              git checkout $BRANCH_PAGE
-              git add
-              git commit -a -m "Lastest site built on successful github action build ${{github.run_number}} auto-pushed to github"
-      
-      - name: Push the updated branch
-         run: | 
-              git push
