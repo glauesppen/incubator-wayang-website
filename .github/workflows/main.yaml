@@ -135,7 +135,7 @@ jobs:
           git config --global user.name "Github Actions"
           git config --global user.email "username@users.noreply.github.com"
           git checkout $BRANCH_PAGE
-          git add
+          git add -A
           git commit -a -m "Lastest site built on successful github action build ${{github.run_number}} auto-pushed to github"
   
       - name: Push the updated branch
