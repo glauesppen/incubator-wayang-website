@@ -21,6 +21,7 @@ run-name: Deploying latest updates on Apache Wayang Website
 env:
   URL: "https://wayang.apache.org"
   BASE_URL: "/"
+  BRANCH_PAGE: asf-site
   REPO_URL: git@github.com:glauesppen/incubator-wayang-website.git
   VALIDATE: ""
   # USER:
