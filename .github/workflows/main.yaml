@@ -124,10 +124,10 @@ jobs:
 
       - name: Syncing files
         run: |
-          mkdir ../$BRANCH_PAGE
-          rsync -av ../tmp/* ../$BRANCH_PAGE
-          cp ../tmp/.gitignore ../$BRANCH_PAGE
-          cp ../tmp/.asf.yaml ../$BRANCH_PAGE
+          mkdir $BRANCH_PAGE
+          rsync -av ../tmp/* $BRANCH_PAGE
+          cp ../tmp/.gitignore $BRANCH_PAGE
+          cp ../tmp/.asf.yaml $BRANCH_PAGE
 
       - name: Checkout
         run: |
@@ -136,7 +136,7 @@ jobs:
           git fetch
           git checkout $BRANCH_PAGE
           git checkout ${GITHUB_REF##*/} --
-          git add ../$BRANCH_PAGE
+          git add $BRANCH_PAGE
         #git diff-index --quiet HEAD
         #git commit -am "Lastest site built on successful github action build ${{github.run_number}} auto-pushed to github"
   
