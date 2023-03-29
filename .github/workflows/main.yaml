@@ -135,15 +135,13 @@ jobs:
           git config --global user.name "Github Actions"
           git config --global user.email "username@users.noreply.github.com"
           git fetch
+          git add $BRANCH_PAGE_FOLDER
+          git commit -am "Lastest site built on successful github action build ${{github.run_number}} auto-pushed to github"
           git checkout $BRANCH_PAGE
-          git checkout ${GITHUB_REF##*/} --
-          git add $BRANCH_PAGE_FOLDER/
-        #git diff-index --quiet HEAD
-        #git commit -am "Lastest site built on successful github action build ${{github.run_number}} auto-pushed to github"
   
-      # - name: Push the updated branch
-      #   run: | 
-      #     #git push origin $BRANCH_PAGE
+      - name: Push the updated branch
+        run: | 
+          git push origin $BRANCH_PAGE
       
       # Commenting this step while we understand if still necessary
       # - name: Commiting changes on Travis branch
