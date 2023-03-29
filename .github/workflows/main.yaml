@@ -125,10 +125,9 @@ jobs:
       - name: Syncing files
         run: |
           mkdir ../$BRANCH_PAGE
-          cd ../$BRANCH_PAGE
-          rsync -av ../tmp/* ./
-          cp ../tmp/.gitignore ./
-          cp ../tmp/.asf.yaml ./
+          rsync -av ../tmp/* ../$BRANCH_PAGE
+          cp ../tmp/.gitignore ../$BRANCH_PAGE
+          cp ../tmp/.asf.yaml ../$BRANCH_PAGE
 
       - name: Checkout
         run: |
@@ -137,13 +136,13 @@ jobs:
           git fetch
           git checkout $BRANCH_PAGE
           git checkout ${GITHUB_REF##*/} --
-          git add -A
-          git diff-index --quiet HEAD
-          git commit -am "Lastest site built on successful github action build ${{github.run_number}} auto-pushed to github"
+          git add ../$BRANCH_PAGE
+        #git diff-index --quiet HEAD
+        #git commit -am "Lastest site built on successful github action build ${{github.run_number}} auto-pushed to github"
   
-      - name: Push the updated branch
-        run: | 
-          git push origin $BRANCH_PAGE
+      # - name: Push the updated branch
+      #   run: | 
+      #     #git push origin $BRANCH_PAGE
       
       # Commenting this step while we understand if still necessary
       # - name: Commiting changes on Travis branch
