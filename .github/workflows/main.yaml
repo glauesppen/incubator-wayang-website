@@ -137,8 +137,13 @@ jobs:
           git fetch
           git add $BRANCH_PAGE_FOLDER
           git commit -am "Lastest site built on successful github action build ${{github.run_number}} auto-pushed to github"
+          git stash
+      
+      - name: Stash pop
+        run: |
           git checkout $BRANCH_PAGE
-  
+          git stash pop
+
       - name: Push the updated branch
         run: | 
           git push origin $BRANCH_PAGE
