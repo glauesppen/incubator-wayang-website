@@ -141,7 +141,7 @@ jobs:
       - name: Stash pop
         run: |
           git checkout $BRANCH_PAGE
-          git stash pop
+          git stash show -p | git apply && git stash drop
           git commit -am "Lastest site built on successful github action build ${{github.run_number}} auto-pushed to github"
 
       - name: Push the updated branch
