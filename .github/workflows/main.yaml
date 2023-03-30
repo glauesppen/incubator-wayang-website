@@ -142,10 +142,15 @@ jobs:
         run: |
           git checkout $BRANCH_PAGE
           git stash apply && git stash drop
-          git commit -am "Lastest site built on successful github action build ${{github.run_number}} auto-pushed to github"
+          
+      - name: Put files in the repo root and remove temp folder
+        run: |
+          cp -r $BRANCH_PAGE_FOLDER/* ./
+          rm -r $BRANCH_PAGE_FOLDER
 
       - name: Push the updated branch
         run: | 
+          git commit -am "Lastest site built on successful github action build ${{github.run_number}} auto-pushed to github"
           git push origin $BRANCH_PAGE
       
       # Commenting this step while we understand if still necessary
